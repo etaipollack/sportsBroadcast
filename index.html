@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Post Requests</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+
+  button {
+    padding: 10px 20px;
+    font-size: 18px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    margin: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+</style>
+</head>
+<body>
+
+<h1>Send Post Requests</h1>
+
+<button onclick="sendPostRequest(4, 'endpoint1')">Send 4 to Endpoint 1</button>
+<button onclick="sendPostRequest(4, 'endpoint2')">Send 4 to Endpoint 2</button>
+
+<script>
+function sendPostRequest(data, endpoint) {
+    // Create a new XMLHttpRequest object
+    var xhr = new XMLHttpRequest();
+
+    // Configure it: POST-request for the URL with the given endpoint
+    xhr.open('POST', 'http://127.0.0.1/' + endpoint, true);
+
+    // Set the Content-Type header to application/json
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    // Send the request
+    xhr.send(JSON.stringify({ number: data }));
+
+    // Callback function executed when the HTTP response comes back
+    xhr.onload = function() {
+        if (xhr.status == 200) {
+            alert('Request sent successfully!');
+        } else {
+            alert('Request failed with status ' + xhr.status);
+        }
+    };
+}
+</script>
+
+</body>
+</html>

@@ -29,31 +29,60 @@
 </head>
 <body>
 
-<h1>Send Post Requests</h1>
+<h2>Team 1 </h2>
 
-<button onclick="sendPostRequest(4, 'endpoint1')">Send 4 to Endpoint 1</button>
-<button onclick="sendPostRequest(4, 'endpoint2')">Send 4 to Endpoint 2</button>
+<button onclick="sendPostRequest('inc', 'team1')">Increase Team 1 Score</button>
+
+<h2> Team 2 </h2>
+
+<button onclick="sendPostRequest('inc', 'team2')">Increase Team 2 Score</button>
+
+<h2> General </h2>
+
+<button onclick="sendPostRequest('reset', 'reset')">Reset score to 0 - 0</button>
+
+
 
 <script>
 function sendPostRequest(data, endpoint) {
+    console.log(data);
+
     // Create a new XMLHttpRequest object
     var xhr = new XMLHttpRequest();
 
     // Configure it: POST-request for the URL with the given endpoint
-    xhr.open('POST', 'http://127.0.0.1/' + endpoint, true);
+    xhr.open('POST', 'http://IP:PORT/', true);
 
     // Set the Content-Type header to application/json
     xhr.setRequestHeader('Content-Type', 'application/json');
 
     // Send the request
-    xhr.send(JSON.stringify({ number: data }));
+    if(endpoint == 'team1') {
+      if(data == 'inc') {
+        xhr.send(JSON.stringify({ team1score: "inc|" }));
+      } else if (data = 'dec') {
+        xhr.send(JSON.stringify({ team1score: "dec|" }));
+      }
+
+    } else if (endpoint == 'team2') {
+      if(data == 'inc') {
+        xhr.send(JSON.stringify({ team2score: "inc|" }));
+      } else if (data = 'dec') {
+        xhr.send(JSON.stringify({ team2score: "dec|" }));
+      }
+    } else if(endpoint == 'reset') {
+      xhr.send(JSON.stringify({ reset : "reset|" }));
+    } else if(endpoint == 'clock') {
+      xhr.send(JSON.stringify({ clock : "45|" }));
+    }
+
 
     // Callback function executed when the HTTP response comes back
     xhr.onload = function() {
         if (xhr.status == 200) {
-            alert('Request sent successfully!');
+            console.log('Request sent successfully!');
         } else {
-            alert('Request failed with status ' + xhr.status);
+            console.log('Request failed with status ' + xhr.status);
         }
     };
 }

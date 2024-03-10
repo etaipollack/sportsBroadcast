@@ -1,7 +1,16 @@
+#!/usr/bin/env python3
+"""
+Usage:
+    ./server.py [<port>]
+"""
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import logging
 
 class S(BaseHTTPRequestHandler):
+    team1score = 0
+    team2score = 0
+    
+
 
     def _set_response(self):
         self.send_response(200)
@@ -55,6 +64,15 @@ class S(BaseHTTPRequestHandler):
             team2score += 1
             f.write(str(team2score))
             f.close()
+        elif(section == "reset"):
+            f = open("team1score.txt", "w")
+            team1score = 0;
+            f.write(str(team1score))
+            f.close();
+            f = open("team2score.txt", "w")
+            team2score = 0;
+            f.write(str(team2score))
+            f.close();
         
 def run(server_class=HTTPServer, handler_class=S, port=28015):
     logging.basicConfig(level=logging.INFO)
